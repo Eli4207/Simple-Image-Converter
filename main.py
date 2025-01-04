@@ -30,10 +30,11 @@ def convert_file():
             rgb_img.save(os.path.basename(filepaths[i]).split('.')[0] + r.get())
         wlabel.configure(text="Images successfully converted!")
         filepaths.clear()
+        update_files()
 
 
 root = ttk.Window(themename="litera")
-root.title("SPM")
+root.title("SIC")
 root.resizable(width=False, height=False)
 r = ttk.StringVar()
 
