@@ -24,11 +24,23 @@ jobs:
         with:
           python-version: '3.12.x'
 
-      - name: Install dependencies
+      - name: Install dependencies (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          pip install ttkbootstrap pillow pyinstaller
+
+      - name: Install dependencies (Linux)
+        if: matrix.os == 'ubuntu-latest'
         run: |
           pip install ttkbootstrap pillow
 
-      - name: Build executable
+      - name: Build executable (Windows)
+        if: matrix.os == 'windows-latest'
+        run: |
+          pyinstaller main.py --onefile -w
+
+      - name: Build executable (Linux)
+        if: matrix.os == 'ubuntu-latest'
         uses: Nuitka/Nuitka-Action@main
         with:
           nuitka-version: main
@@ -41,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: windows-executable
-          path: build/main.exe
+          path: dist/main.exe
 
       - name: Upload executable (Linux)
         if: matrix.os == 'ubuntu-latest'
@@ -75,8 +87,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
-          tag_name: V1.1
-          release_name: Release V1.1
+          tag_name: V1.2
+          release_name: Release V1.2
           draft: false
           prerelease: false
 
