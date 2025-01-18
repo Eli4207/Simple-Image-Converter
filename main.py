@@ -7,9 +7,10 @@ filepaths = []
 
 def add_file():
     allowed_filetypes = ("PNG files", "*.png"),("JPEG files", "*.jpg"),("GIF files", "*.gif"),("TIFF files", "*.tif"),("WEBP files", "*.webp"),("All files", "*.*")
-    file = filedialog.askopenfilename(initialdir=os.path.abspath(__file__), title="Select a File", filetypes=(allowed_filetypes))
-    if not file == "":
-        filepaths.append(file)
+    files = filedialog.askopenfilenames(initialdir=os.path.abspath(__file__), title="Select file(s)", filetypes=(allowed_filetypes))
+    if not files == "":
+        for file in files:
+            filepaths.append(file)
     update_files()
 
 def update_files():
